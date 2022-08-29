@@ -5,24 +5,24 @@ There are more detailed setup instructions in `Assignment-0` and the other direc
 1. Clone the GitHub Class Repository to get started (there are more detailed instructions in `Assignment-0` README):
 `git clone https://github.com/umddb/cmsc424-fall2022.git`
 
-1. You can load the systems directly on your machines (easier on Linux or Mac), but to make things easier, we have provided a Docker Image with
+1. You can load the different database systems directly on your machines (easier on Linux or Mac), but to make things easier, we have provided a Docker Image with
 PostgreSQL pre-loaded (we will update the image throughout the semester).
     - Install Docker Desktop: https://www.docker.com/products/docker-desktop
-    - Run the docker image: `docker run --rm -ti -p 8888:8888 -p 8881:8881 -p 5432:5432 -v /Users/amol/git/cmsc424-fall2022:/data amolumd/cmsc424-fall2022`. Make sure
-    to replace "/Users/amol/..." with the correct path of the `top level directory` in the cloned GitHub repository. 
+    - Run the docker image: `docker run --rm -ti -p 8888:8888 -p 8881:8881 -p 5432:5432 -v /Users/amol/git/cmsc424-fall2022:/data amolumd/cmsc424-fall2022`. 
+    - Make sure to replace `/Users/amol/...` with the correct path of the `top level directory` in the cloned GitHub repository. 
+    - The above command mounts the local GitHub directory into `/data` on the virtual machine. Do `ls /data` in the virtual machine to confirm that you can see
+    `Assignment-0` directory in there. Make all your changes in that directory itself -- any changes elsewhere in the container will not survive when you exit it.
     - Assuming it ran successfully, you should be logged in as `root` in the docker container, and you should see the shell.
-    - The above command maps three ports on the virtual machine: 8888, 8881, and 5432 (PostgreSQL). This means that if you go to 'http://127.0.0.1:8888', you will
+    - The above command maps three ports on the container: 8888, 8881, and 5432 (PostgreSQL). This means that if you go to 'http://127.0.0.1:8888', you will
     actually be connecting to the 8888 port on the virtual machine (on which we are running the Jupyter Notebook). However, if your computer is already using these
-    ports, you will have to modify those. 
-    - The above command also mounts the local GitHub directory into `/data` on the virtual machine. Do `ls /data` in the virtual machine to confirm that you can see
-    `Assignment-0` directory in there.
+    ports, you will have to modify those (see below). 
     - NOTE: you will be logged in as `root`.
     - At this point, you should be able to use psql: `psql university`
     - Jupyter Notebook should be pre-started (try http://127.0.0.1:8888), but if not, you can do: `jupyter-notebook --port=8888 --allow-root --no-browser --ip=0.0.0.0`
     - As soon as you exit the Docker container, the machine will shut down -- so only changes you have made in the /data directory will persist.
 
-1. *If you are having trouble installing Docker or somewhere in the steps above, you can also install the software directly by going through the commands listed in
-the Dockerfile*
+1. If you are having trouble installing Docker or somewhere in the steps above, you can also install the software directly by going through the commands listed in
+the Dockerfile.
 
 
 ## Important: Read before Visiting Office Hours for Errors
