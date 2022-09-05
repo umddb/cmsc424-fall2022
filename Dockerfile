@@ -8,6 +8,8 @@ RUN apt install -y python3-pip python3-dev postgresql postgresql-contrib libpq-d
 RUN apt install -y sudo curl systemctl gnupg
 RUN pip3 install jupyter ipython-sql psycopg2 flask flask-restful flask_cors pymongo
 
+RUN pip3 install nbconvert --upgrade
+
 ADD Assignment-0/smallRelationsInsertFile.sql Assignment-0/largeRelationsInsertFile.sql Assignment-0/DDL.sql /datatemp/
 ADD Assignment-2/sample_analytics/customers.json Assignment-2/sample_analytics/accounts.json Assignment-2/sample_analytics/transactions.json /datatemp/
 ADD Assignment-0/postgresql.conf /datatemp/
@@ -30,20 +32,20 @@ RUN /etc/init.d/postgresql start &&\
 
 USER root
 
-RUN curl -fsSL https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add - &&\
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list &&\
-apt update &&\
-## curl -O http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb &&\
-## dpkg -i ./libssl1.1_1.1.1f-1ubuntu2_amd64.deb &&\
-apt install -y mongodb-org 
+## No MongoDB RUN curl -fsSL https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add - &&\
+## No MongoDB echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list &&\
+## No MongoDB apt update &&\
+## No MongoDB ## curl -O http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb &&\
+## No MongoDB ## dpkg -i ./libssl1.1_1.1.1f-1ubuntu2_amd64.deb &&\
+## No MongoDB apt install -y mongodb-org 
 
-RUN systemctl enable mongod
-RUN (/usr/bin/mongod --config /etc/mongod.conf &) &&\
-    mongoimport --db "analytics" --collection "customers" /datatemp/customers.json  &&\
-    mongoimport --db "analytics" --collection "customers" /datatemp/accounts.json  &&\
-    mongoimport --db "analytics" --collection "customers" /datatemp/transactions.json  
+## No MongoDB RUN systemctl enable mongod
+## No MongoDB RUN (/usr/bin/mongod --config /etc/mongod.conf &) &&\
+## No MongoDB mongoimport --db "analytics" --collection "customers" /datatemp/customers.json  &&\
+## No MongoDB mongoimport --db "analytics" --collection "customers" /datatemp/accounts.json  &&\
+## No MongoDB mongoimport --db "analytics" --collection "customers" /datatemp/transactions.json  
 
 ENTRYPOINT service postgresql start &&\ 
-        (/usr/bin/mongod --config /etc/mongod.conf &) &&\
+## No MongoDB (/usr/bin/mongod --config /etc/mongod.conf &) &&\
         (jupyter-notebook --port=8888 --allow-root --no-browser --ip=0.0.0.0 --NotebookApp.notebook_dir='/data' --NotebookApp.token='' 2>/dev/null &) &&\ 
         /bin/bash
