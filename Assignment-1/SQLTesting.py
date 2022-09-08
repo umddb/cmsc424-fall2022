@@ -15,7 +15,7 @@ args = parser.parse_args()
 
 interactive = args.interactive
 
-conn = psycopg2.connect("dbname=se_small user=root")
+conn = psycopg2.connect("dbname=stackexchange user=root")
 cur = conn.cursor()
 
 totalscore = 0
