@@ -1,4 +1,4 @@
-## Assignment 1: SQL Assignment - Part 1, CMSC424, Fall 2021
+## Assignment 1: SQL Assignment - Part 1, CMSC424, Fall 2022
 
 *The assignment is to be done by yourself.*
 
@@ -12,7 +12,7 @@ It also assumes you have cloned the git repository, and have done a `git pull` t
 
 ### Getting started
 1. Create a new database using: 'createdb stackexchange'
-1. Load the data using: 'psql -f populate-se.sql' (or you can do \i populate-sn.sql from within psql)
+1. Load the data using: 'psql -f populate-se.sql' (or you can do \i populate-se.sql from within psql)
 1. There will be a lot of errors -- ignore those -- we are using a subset of the posts and users, and we are letting PostgreSQL reject inserts that violate referential integrity.
 
 ### Schema 
