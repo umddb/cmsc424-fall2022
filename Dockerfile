@@ -12,6 +12,7 @@ RUN pip3 install nbconvert --upgrade
 
 ADD Assignment-0/smallRelationsInsertFile.sql Assignment-0/largeRelationsInsertFile.sql Assignment-0/DDL.sql /datatemp/
 ADD Assignment-2/sample_analytics/customers.json Assignment-2/sample_analytics/accounts.json Assignment-2/sample_analytics/transactions.json /datatemp/
+ADD Assignment-1/populate-se.sql /datatemp/
 ADD Assignment-0/postgresql.conf /datatemp/
 
 EXPOSE 8888
@@ -29,6 +30,8 @@ RUN /etc/init.d/postgresql start &&\
     psql --command "create user root;" university &&\
     psql --command "alter user root with password 'root';" university &&\
     psql --command "alter user root with superuser;" &&\
+    createdb stackexchange &&\
+    psql --command "\i /datatemp/populate-se.sql" stackexchange &&\
     /etc/init.d/postgresql stop
 
 USER root
