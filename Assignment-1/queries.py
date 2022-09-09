@@ -42,14 +42,14 @@ select 0;
 ### Hint: Use subtraction on "date" to get number of days between two dates.
 ### Count only full days (i.e., someone who joined 1.5 days ago only needs to
 ### have provided 1 UpVote to make it into the result)
-### Output columns: DisplayName, CreationDate, UpVotes
+### Output columns: Id, DisplayName, CreationDate, UpVotes
 ### Order by Id ascending
 queries[4] = """
 select 0;
 """
 
 ### 5. Write a single query to report all Badges for the users with reputation between 10000 and 11000, by joining Users and Badges.
-### Output Column: Id (from Users), DisplayName, Name (from Badges)
+### Output Column: Id (from Users), DisplayName, Name (from Badges), Reputation
 ### Order by: Id increasing
 queries[5] = """
 select 0;
