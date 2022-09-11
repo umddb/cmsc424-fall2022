@@ -101,6 +101,11 @@ select 0;
 ### Output columns: Id, DisplayName, Num_Comments
 ### Order by Id ascending (there may be more than one answer)
 queries[10] = """
+with temp as (
+        select Users.Id, DisplayName, count(*) as num_Comments 
+        from users, comments 
+        where users.id = comments.userid 
+        group by users.id, users.displayname)
 select 0;
 """
 
