@@ -36,7 +36,7 @@ You are also provided with a Python file `SQLTesting.py` for testing your answer
 
 - SQLTesting takes quite a few options: use `python3 SQLTesting.py -h` to see the options.
 
-- To get started with SQLTesting, do: `python3 SQLTesting.py -v -i` -- that will run each of the queries and show you your answer.
+- To get started with SQLTesting, do: `python3 SQLTesting.py -i` -- that will run each of the queries and show you your answer.
 
 - If you want to run your query for Question 1, use: `python3 SQLTesting.py -q 1`. 
 
