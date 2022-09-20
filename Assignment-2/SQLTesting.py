@@ -41,6 +41,8 @@ test_queries_to_run[3] = ("select count(*) from postscopy where tags is null",
                                     "-- Result (single tuple with a 0)")
 test_queries_to_run[4] = ("select * from postscopy where id > 100000", 
                                 "-- Result (new 10 tuples)")
+test_queries_to_run[6] = ("select * from UsersSummary where id < 100", 
+                                "-- Result (new 10 tuples)")
 test_queries_to_run[8] = ("select id, title, numcomments(id) from posts limit 100", 
                                 "-- Result")
 test_queries_to_run[9] = ("select userbadges(10)", "-- Result")
@@ -57,14 +59,14 @@ for i in range(0, 13):
             print(queries[i])
             cur.execute(queries[i])
 
-            if i in [5, 6, 7, 12]:
+            if i in [5, 7, 12]:
                 ans = cur.fetchall()
 
                 print("--------- Your Query Answer ---------")
                 for t in ans:
                     print(t)
                 print("")
-            elif i in [1, 2, 3, 4, 8, 9, 10]:
+            elif i in [1, 2, 3, 4, 6, 8, 9, 10]:
                 conn.commit()
                 print("--------- Running {} -------".format(test_queries_to_run[i][0]))
                 cur.execute(test_queries_to_run[i][0])
@@ -73,7 +75,7 @@ for i in range(0, 13):
                 for t in ans:
                     print(t)
                 print("")
-            elif i in [7]:
+            elif i in [11]:
                 conn.commit()
                 query_string = "insert into votes values(1000001,9306 , 5, -1, null, null)"
                 cur.execute(query_string)
