@@ -28,7 +28,7 @@ select 0;
 """
 
 ### 2 [0.5]. Write a single query/statement to set the values of the new columns. 
-### Use "age()" function to find the age of the Post as of "September 1, 2022". 
+### Use "age()" function to find the age of the Post as of "September 1, 2022" in years. 
 ###
 ### The "Popularity" column should be set as follows:
 ### High: ViewCount >= 20000, Medium: ViewCount between 10000 and 20000, 
