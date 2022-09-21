@@ -69,7 +69,7 @@ queries[4] = """
 select 0;
 """
 
-### 5 [0.25]. Write a single query to rank the "Posts" by the number of comments, with the Post 
+### 5 [0.25]. Write a single query to rank the "Posts" by the number of votes, with the Post 
 ### with the highest number of votes getting rank 1. 
 ### If there are ties, the two (or more) votes should get the same "rank", and next ranks 
 ### should be skipped.
