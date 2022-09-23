@@ -47,7 +47,7 @@ test_queries_to_run[8] = ("select id, title, numcomments(id) from posts limit 10
                                 "-- Result")
 test_queries_to_run[9] = ("select userbadges(10)", "-- Result")
 test_queries_to_run[10] = (
-                'SELECT n.nspname as "Schema", p.proname as "Name", pg_catalog.pg_get_function_result(p.oid) as "Result data type" FROM pg_catalog.pg_proc p LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace WHERE p.proname = \'UpdateMostFavoritedOnInsert\'' ,
+                'SELECT n.nspname as "Schema", p.proname as "Name", pg_catalog.pg_get_function_result(p.oid) as "Result data type" FROM pg_catalog.pg_proc p LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace WHERE p.proname = \'updatemostfavoritedoninsert\'' ,
                 "-- Result (should list the trigger function)")
 for i in range(0, 13):
     # If a query is specified by -q option, only do that one
