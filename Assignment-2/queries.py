@@ -176,9 +176,11 @@ select 0;
 ###    "displayname": "Kim", 
 ###   "badges": [ {"name": "Autobiographer", "class": 3, "date": "2011-01-03"}, 
 ###                {"name": "Supporter", "class": 3, "date": "2011-02-25"}, 
-###                {"name": " Teacher", "class": 3, "date": "2011-02-25"}, 
+###                {"name": "Teacher", "class": 3, "date": "2011-02-25"}, 
 ###                {"name": "Critic", "class": 3, "date": "2011-02-28"}
 ###    ]}
+###
+### The badges (inside the array) should be ordered by date first (increasing) and then by the name of the badge.
 ### 
 ###
 ### You should use PL/pgSQL for this purpose -- writing this purely in SQL is somewhat cumbersome.
