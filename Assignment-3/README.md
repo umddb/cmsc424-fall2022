@@ -69,18 +69,19 @@ is built using the Python `Flask` library, and couple of other packages built on
 - Ensure that PostgreSQL is running in the container.
 - Now, in the Assignment-3 directory, you can start the Flask server by doing: `python3 rest.py`
 - This should get the Flask server running, and listening on port 5000.
-- In your web browser, go to: `http://127.0.0.1:5000/users/10' -- you should see the JSON response from the web server with the basic information for user 10 in the database.
+- In your web browser, go to: `http://127.0.0.1:5000/posts/14' -- you should see the JSON response from the web server with the basic information for post 14 in the database.
     - If the web server is successfully up but this doesn't work, it's likely a problem with port mapping
 - Your task is implement three other, user-specific endpoints:
-    - `GET /posts/<postid>/`: Given a specific postid, this should return a JSON with the details about the post as listed in `rest.py`
-        - Don't worry about the case where the post is not found in the database
+    - `GET /user/<userid>/`: Given a specific userid, this should return a JSON with the details about the user as listed in `rest.py`
+        - Don't worry about the case where the user is not found in the database -- it is already handled in the code
     - `DELETE /user/<userid>`: Given a specific userid, this should delete the user from the backend database
         - You cannot run this from the Web browser easily, instead, the simplest way is to...
-        - Use `curl`: Try `curl -X DELETE http://127.0.0.1:5000/user/user10sk3` -- it should return a default message
+        - Use `curl`: Try `curl -X DELETE http://127.0.0.1:5000/user/11` -- it should return a default message
     - `POST /user/<userid>`: Given the information in the POST payload, this should create a new user with the specific userid
         - As above, you cannot easily run this from the web browser
-        - Instead, try: `curl -X POST -d "birthdate=xyz" -d "joined=xyz" -d 'name=linuxize' 127.0.0.1:5000/user/user1`
+        - Instead, try: `curl -X POST -d "reputation=1" -d "creationdate=10/01/2022" -d 'displayname=something' -d 'upvotes=10' -d 'downvotes=0' 127.0.0.1:5000/user/11111`
         - We have already provided code for parsing the POST payload -- in the server output, you should see the parsed values to be inserted
+        - You can assume that the creation date will be provided in the "mm/dd/yyyy" format.
 - In addition, you need to implement one "Analytics Dashboard" endpoint that returns the top 100 users by reputation 
     - `GET /dashboard/top100users`: should return a JSON with a ranked list of top 100 users by reputation, using the standard PostgreSQL RANK function
 - For more details, see the `rest.py` file -- it includes specific locations where you have to make the changes as well as discusses the error conditions that need to be

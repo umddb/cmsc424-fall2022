@@ -62,7 +62,6 @@ class User(Resource):
     # If the "id" is already present in the database, a FAILURE message should be returned
     def post(self, userid):
         parser = reqparse.RequestParser()
-        parser.add_argument("id")
         parser.add_argument("reputation")
         parser.add_argument("creationdate")
         parser.add_argument("displayname")
