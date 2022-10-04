@@ -90,7 +90,7 @@ handled.
 ## Metadata Operations with JDBC (1 point)
 JDBC also allows inspection of the schema, which can be a powerful feature to explore new databases (or datasets). Here, your task is to use that functionality to create a short summary of the tables in a database and the possible joins between the tables of the database based on the `foreign keys`.
 
-Specifically, you should use the `getMetaData()` function to obtain `DatabaseMetaData` object, and use that fetch information about the tables in the database as well as information about the primary keys and foreign keys. 
+Specifically, you should use the `getMetaData()` function to obtain `DatabaseMetaData` object, and use that to fetch information about the tables in the database as well as information about the primary keys and foreign keys. 
 
 This resource here has detailed examples of how to use this functionality: https://www.baeldung.com/jdbc-database-metadata
 
