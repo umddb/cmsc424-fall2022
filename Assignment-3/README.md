@@ -27,30 +27,42 @@ Our goal is to find, for each user, its `nearest neighbor` based on the tags of 
 The simple algorithm we have listed below wouldn't work for the number of users we have, so we will only focus on the first 1000 users.
 Here are the main steps:
 
-1. Execute an SQL statement to add a new column to the `users` table called `most_similar_users`. This should be an `Array` column (i.e., `integer[]`).
+1. Execute an SQL statement to add a new column to the `users` table called `nearest_neighbor`. This should be an `integer` column.
 1. Use the following query to fetch relevant data from the database: 
 ```
-select users.id, array_remove(array_agg(posts.tags), null) 
+select users.id, array_remove(array_agg(posts.tags), null) as arr
 from users, posts 
 where users.id = posts.OwnerUserId and users.id < 5000 
 group by users.id
+having count(posts.tags) > 0;
 ```
-This will give us, for each user, an array of `tags` strings (which themselves are lists).
+This will give us, for each user, an array of `tags` strings (which themselves are lists). Users with no posts with tags will be omitted.
 1. Parse and separate out the tags for each user, so that, for each userid, we get a set of tags (use Java HashSet to store these).
 1. For each user, say ID = A, go through the rest of the users and find the user with the highest `Jaccard Similarity Coefficient` based on the tag sets for the two users.
     1. Given two sets of tags, S1 and S2, the Jaccard Similarly is computed as: (size of the intersection of S1 and S2)/(size of the union of S1 and S2)
     1. We have provided you with a function (`jaccard`) that takes in two HashSets of Strings and return the Jaccard Coefficient.
 1. If there is a tie (say B and C both have the same Jaccard Similarity with A), you should use the user with the lowest ID (i.e., use B if B < C).
-1. Write out the id of the closest user computed above to the `most_similar_user` column for A.
+1. Write out the id of the closest user computed above to the `nearest_neighbor` column for A.
 1. Make sure to commit after you are done.
 
-First rows of `select * from users order by id limit 5` afterwards look like:
+First rows of `select * from users order by id limit 10` afterwards look like:
 ```
-userid  |        name         | birthdate  |   joined   |     lcc
----------+---------------------+------------+------------+-------------
-user0   | Anthony Roberts     | 1998-10-20 | 2007-02-04 |  0.21904762
-user1   | Anthony Taylor      | 1967-02-09 | 2014-08-19 |  0.24242425
+ id | reputation | creationdate |   displayname   | views | upvotes | downvotes | nearest_neighbor
+----+------------+--------------+-----------------+-------+---------+-----------+------------------
+ -1 |          1 | 2011-01-03   | Community       |   863 |   12299 |      8651 |
+  2 |        101 | 2011-01-03   | Geoff Dalgas    |    64 |      10 |         0 |
+  3 |        101 | 2011-01-03   | balpha          |    35 |       4 |         0 |
+  4 |        212 | 2011-01-03   | Nick Craver     |    61 |      11 |         1 |
+  5 |        101 | 2011-01-03   | Emmett          |    32 |       2 |         0 |
+  6 |        100 | 2011-01-03   | Robert Cartaino |    36 |       0 |         2 |
+  7 |       1128 | 2011-01-03   | Toby            |    69 |      18 |         0 |             2993
+  8 |       2949 | 2011-01-03   | ilhan           |   142 |      12 |         0 |               14
+  9 |        101 | 2011-01-03   | Humpton         |    12 |       7 |         0 |
+ 10 |        175 | 2011-01-03   | Kim             |    27 |       1 |         1 |
+(10 rows)
 ```
+
+For most of these, the `nearest_neighbor` is null because they don't satisfy the condition listed above (that there be at least one post with tags for that user).
 
 We have provided a skeleton code to get you started. As above, the code will be run using: `javac NearestNeighbor.java` followed by `java -classpath
 .:./postgresql-42.2.10.jar NearestNeighbor`, and should result in a modified `users` table as described above.
