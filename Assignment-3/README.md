@@ -81,7 +81,7 @@ is built using the Python `Flask` library, and couple of other packages built on
 - Ensure that PostgreSQL is running in the container.
 - Now, in the Assignment-3 directory, you can start the Flask server by doing: `python3 rest.py`
 - This should get the Flask server running, and listening on port 5000.
-- In your web browser, go to: `http://127.0.0.1:5000/posts/14' -- you should see the JSON response from the web server with the basic information for post 14 in the database.
+- In your web browser, go to: `http://127.0.0.1:5000/post/14' -- you should see the JSON response from the web server with the basic information for post 14 in the database.
     - If the web server is successfully up but this doesn't work, it's likely a problem with port mapping
 - Your task is implement three other, user-specific endpoints:
     - `GET /user/<userid>/`: Given a specific userid, this should return a JSON with the details about the user as listed in `rest.py`
@@ -91,7 +91,10 @@ is built using the Python `Flask` library, and couple of other packages built on
         - Use `curl`: Try `curl -X DELETE http://127.0.0.1:5000/user/11` -- it should return a default message
     - `POST /user/<userid>`: Given the information in the POST payload, this should create a new user with the specific userid
         - As above, you cannot easily run this from the web browser
-        - Instead, try: `curl -X POST -d "reputation=1" -d "creationdate=10/01/2022" -d 'displayname=something' -d 'upvotes=10' -d 'downvotes=0' 127.0.0.1:5000/user/11111`
+        - Instead, try: 
+        ```
+        curl -X POST -d '{"reputation": 1, "creationdate": "10/01/2022", "displayname": "something", "upvotes": 10, "downvotes": 0}' -H 'Content-Type: application/json'  127.0.0.1:5000/user/11111
+        ```
         - We have already provided code for parsing the POST payload -- in the server output, you should see the parsed values to be inserted
         - You can assume that the creation date will be provided in the "mm/dd/yyyy" format.
 - In addition, you need to implement one "Analytics Dashboard" endpoint that returns the top 100 users by reputation 

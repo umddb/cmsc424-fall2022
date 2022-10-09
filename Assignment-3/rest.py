@@ -68,6 +68,7 @@ class User(Resource):
         parser.add_argument("upvotes")
         parser.add_argument("downvotes")
         args = parser.parse_args()
+        print("Data received for new user {}".format(userid))
         print(args)
 
         # Add your code to check if the userid is already present in the database
