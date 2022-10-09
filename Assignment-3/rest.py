@@ -40,7 +40,8 @@ class Dashboard(Resource):
 
 class User(Resource):
     # Return all the info about a specific user, including the titles of the user's posts as an array
-    # The title must be sorted in the increasing order by the title.
+    # The titles array must be sorted in the increasing order by the title.
+    # Remove NULL titles if any
     # FORMAT: {"ID": "...", "DisplayName": "...", "CreationDate": "...", "Reputation": "...", "PostTitles": ["posttitle1", "posttitle2", ...]}
     def get(self, userid):
         # Add your code to construct "ret" using the format shown below
@@ -53,7 +54,6 @@ class User(Resource):
         if not exists_user:
             return "User not found", 404
         else:
-            # Add your code to insert the new tuple into the database
             ret = {"ID": "xyz", "DisplayName": "xyz", "CreationDate": "...", "Reputation": "...", "PostTitles": ["posttitle1", "posttitle1"]}
             return ret, 200
 
@@ -68,7 +68,7 @@ class User(Resource):
         parser.add_argument("upvotes")
         parser.add_argument("downvotes")
         args = parser.parse_args()
-        print("Data received for new user {}".format(userid))
+        print("Data received for new user with id {}".format(userid))
         print(args)
 
         # Add your code to check if the userid is already present in the database
