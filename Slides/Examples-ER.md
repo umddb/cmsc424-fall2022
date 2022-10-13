@@ -15,5 +15,5 @@ Some things you need to model, and watch out for:
 
 A possible solution: Note that both started-watching and stopped-watching are multi-valued, to capture the fact that the user may switch back and forth between TV channels.
 
-![Nielsen E/R Diagram](neilsen.jpg)
+![Nielsen E/R Diagram](nielsen.jpg)
 
