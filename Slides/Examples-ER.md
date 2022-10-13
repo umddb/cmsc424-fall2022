@@ -17,3 +17,18 @@ A possible solution: Note that both started-watching and stopped-watching are mu
 
 ![Nielsen E/R Diagram](nielsen.jpg)
 
+
+## Olympics
+You are asked to design a database that for storing information about the Summer Olympics, the sports, 
+who won the medals, when the events were conducted, the results etc. Construct an E/R diagram for this database.
+
+Possible entity sets include: Country, Player, Event etc. Make any simplifying assumptions you need to make
+(and state them). You should have about 5-6 entity sets.
+
+Some things you need to model, and watch out for:
+- Many events have prelinimary ``heats'' (e.g. 100m), and there should be a way to model this information.
+- Several of the events are ``team'' events, with the size of the team usually being 4, and all of them are awarded the same medal; however more medals might be awarded if the team members participating in the heats differ from the team members participating in the final.
+- You should be able to answer questions like ``what was the progression of winning times over last 100 years for 200m running'' ? 
+- Take a look at this website for more information about types of data that needs to be stored http://www.databaseolympics.com/.
+
+![Olympics E/R Diagram](olympics-er.jpg)
