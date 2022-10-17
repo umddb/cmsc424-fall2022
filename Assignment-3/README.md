@@ -86,6 +86,7 @@ is built using the Python `Flask` library, and couple of other packages built on
 - Your task is implement three other, user-specific endpoints:
     - `GET /user/<userid>/`: Given a specific userid, this should return a JSON with the details about the user as listed in `rest.py`
         - Don't worry about the case where the user is not found in the database -- it is already handled in the code
+	- Remove NULL titles from the array of post titles.
     - `DELETE /user/<userid>`: Given a specific userid, this should delete the user from the backend database
         - You cannot run this from the Web browser easily, instead, the simplest way is to...
         - Use `curl`: Try `curl -X DELETE http://127.0.0.1:5000/user/11` -- it should return a default message
@@ -93,10 +94,10 @@ is built using the Python `Flask` library, and couple of other packages built on
         - As above, you cannot easily run this from the web browser
         - Instead, try: 
         ```
-        curl -X POST -d '{"reputation": 1, "creationdate": "10/01/2022", "displayname": "something", "upvotes": 10, "downvotes": 0}' -H 'Content-Type: application/json'  127.0.0.1:5000/user/11111
+        curl -X POST -d '{"reputation": 1, "creationdate": "2022-10-01", "displayname": "something", "upvotes": 10, "downvotes": 0}' -H 'Content-Type: application/json'  127.0.0.1:5000/user/11111
         ```
         - We have already provided code for parsing the POST payload -- in the server output, you should see the parsed values to be inserted
-        - You can assume that the creation date will be provided in the "mm/dd/yyyy" format.
+        - You can assume that the creation date will be provided in the "yyyy/mm/dd" format.
 - In addition, you need to implement one "Analytics Dashboard" endpoint that returns the top 100 users by reputation 
     - `GET /dashboard/top100users`: should return a JSON with a ranked list of top 100 users by reputation, using the standard PostgreSQL RANK function
 - For more details, see the `rest.py` file -- it includes specific locations where you have to make the changes as well as discusses the error conditions that need to be
