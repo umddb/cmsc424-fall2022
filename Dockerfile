@@ -10,10 +10,10 @@ RUN pip3 install jupyter ipython-sql psycopg2 flask flask-restful flask_cors pym
 
 RUN pip3 install nbconvert --upgrade
 
-ADD Assignment-0/smallRelationsInsertFile.sql Assignment-0/largeRelationsInsertFile.sql Assignment-0/DDL.sql /datatemp/
-ADD Assignment-2/sample_analytics/customers.json Assignment-2/sample_analytics/accounts.json Assignment-2/sample_analytics/transactions.json /datatemp/
-ADD Assignment-1/populate-se.sql /datatemp/
-ADD Assignment-0/postgresql.conf /datatemp/
+ADD Assignment-0/smallRelationsInsertFile.sql Assignment-0/largeRelationsInsertFile.sql Assignment-0/DDL.sql Assignment-0/postgresql.conf /datatemp/
+ADD Assignment-5/sample_analytics/customers.json Assignment-5/sample_analytics/accounts.json Assignment-5/sample_analytics/transactions.json /datatemp/
+ADD Assignment-3/populate-se.sql /datatemp/
+ADD Assignment-4/spark-3.3.0-bin-hadoop3/ /spark/
 
 EXPOSE 8888
 EXPOSE 5432
@@ -48,6 +48,8 @@ RUN (/usr/bin/mongod --config /etc/mongod.conf &) &&\
 mongoimport --db "analytics" --collection "customers" /datatemp/customers.json  &&\
 mongoimport --db "analytics" --collection "customers" /datatemp/accounts.json  &&\
 mongoimport --db "analytics" --collection "customers" /datatemp/transactions.json  
+
+ENV SPARKHOME=/spark/
 
 ENTRYPOINT service postgresql start &&\ 
         (/usr/bin/mongod --config /etc/mongod.conf &) &&\
