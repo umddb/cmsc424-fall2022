@@ -101,7 +101,7 @@ The file also contains some examples of operations on these RDDs.
 Your tasks are to fill out the 14 functions that are defined in the `functions.py` file (starting with `task`). The amount of code that you 
 write would typically be small (several would be one-liners), with the exception of the last one. 
 
-- **Task 1 (0.25)**: Use `filter` to find all posts that are not `null` (None in python) and tagged 'postgresql-9.4', and then a
+- **Task 1 (0.25)**: Use `filter` to find all posts where tags are not `null` (None in python) and that are tagged 'postgresql-9.4', and then a
 `map` so that the output RDD has tuples of the form: (ID, Title, Tags). Note that postsRDD contains dictionaries -- see the contents
 by running `postsRDD.take(10)`.
 
