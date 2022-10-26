@@ -13,12 +13,14 @@ RUN pip3 install nbconvert --upgrade
 ADD Assignment-0/smallRelationsInsertFile.sql Assignment-0/largeRelationsInsertFile.sql Assignment-0/DDL.sql Assignment-0/postgresql.conf /datatemp/
 ADD Assignment-5/sample_analytics/customers.json Assignment-5/sample_analytics/accounts.json Assignment-5/sample_analytics/transactions.json /datatemp/
 ADD Assignment-3/populate-se.sql /datatemp/
+ADD Assignment-4/log4j2.properties /datatemp/
 ADD Assignment-4/spark-3.3.0-bin-hadoop3/ /spark/
 
 EXPOSE 8888
 EXPOSE 5432
 
 RUN cp /datatemp/postgresql.conf /etc/postgresql/12/main/postgresql.conf
+RUN cp /datatemp/log4j2.properties /spark/conf
 
 USER postgres
 

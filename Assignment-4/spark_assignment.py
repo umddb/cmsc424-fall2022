@@ -2,6 +2,7 @@ from pyspark import SparkContext
 from functions import *
 import re
 import json
+import sys
 
 sc = SparkContext("local", "Simple App")
 setDefaultAnswer(sc.parallelize([0]))
@@ -16,6 +17,11 @@ nobelRDD = sc.textFile("datafiles/prize.json").map(json.loads)
 
 ## The following converts the amazonInputRDD into 2-tuples with integers
 amazonBipartiteRDD = amazonInputRDD.map(lambda x: x.split(" ")).map(lambda x: (x[0], x[1])).distinct()
+
+if len(sys.argv) < 2:
+   task_to_run = None
+else:
+   task_to_run = int(sys.argv[1])
 
 
 ## Each of the tasks requires you to write one function
@@ -41,29 +47,44 @@ tasks = [
 
 for task in tasks:
      ## tasks where you have to write a function that takes in an RDD as input
-     print("=========================== Task {}".format(task[0]))
-     if task[0] in [1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 15, 16]:
-        r = task[1](task[2])
-        for x in r.takeOrdered(50):
-            print(x)
+     if task_to_run is None or task_to_run == task[0]:
+         print("=========================== Task {}".format(task[0]))
+         if task[0] in [1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 15, 16]:
+            r = task[1](task[2])
+            for x in r.takeOrdered(50):
+                print(x)
 
-     ## tasks where you have to write a function that takes in two RDDs as input
-     elif task[0] in [4]:
-        r = task[1](task[2][0], task[2][1])
-        for x in r.takeOrdered(50):
-            print(x)
+         ## tasks where you have to write a function that takes in two RDDs as input
+         elif task[0] in [4]:
+            r = task[1](task[2][0], task[2][1])
+            for x in r.takeOrdered(50):
+                print(x)
 
-     ## tasks where you have to write a flatMap function
-     elif task[0] in [10]:
-        r = task[2].flatMap(task[1]).distinct()
-        print(r.takeOrdered(50))
+         ## tasks where you have to write a flatMap function
+         elif task[0] in [10]:
+            r = task[2].flatMap(task[1]).distinct()
+            print(r.takeOrdered(50))
 
-     ## special cases
-     elif task[0] in [13]:
-        r = task[1](task[2], ['01/Jul/1995', '02/Jul/1995'])
-        for x in r.takeOrdered(50):
-            print(x)
-     elif task[0] in [14]:
-        r = task[1](task[2], '01/Jul/1995', '02/Jul/1995')
-        for x in r.takeOrdered(50):
-            print(x)
+         ## special cases
+         elif task[0] in [13]:
+            r = task[1](task[2], ['01/Jul/1995', '02/Jul/1995'])
+            for x in r.takeOrdered(50):
+                print(x)
+         elif task[0] in [14]:
+            r = task[1](task[2], '01/Jul/1995', '02/Jul/1995')
+            for x in r.takeOrdered(50):
+                print(x)
+
+
+## print out the expected answer
+if task_to_run is not None:
+    with open('results.txt', 'r') as f:
+        start_printing = False
+        for line in f:
+            if "========= Task {}\n".format(task_to_run) in line:
+               start_printing = True
+            if "========= Task {}\n".format(task_to_run+1) in line:
+               start_printing = False
+            
+            if start_printing:
+                print(line.strip())
