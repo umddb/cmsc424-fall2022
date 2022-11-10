@@ -12,6 +12,7 @@ RUN pip3 install nbconvert --upgrade
 
 ADD Assignment-0/smallRelationsInsertFile.sql Assignment-0/largeRelationsInsertFile.sql Assignment-0/DDL.sql Assignment-0/postgresql.conf /datatemp/
 ADD Assignment-5/sample_analytics/customers.json Assignment-5/sample_analytics/accounts.json Assignment-5/sample_analytics/transactions.json /datatemp/
+ADD Assignment-0/zips.json /datatemp/
 ADD Assignment-3/populate-se.sql /datatemp/
 ADD Assignment-4/log4j2.properties /datatemp/
 ADD Assignment-4/spark-3.3.0-bin-hadoop3/ /spark/
@@ -48,8 +49,9 @@ apt install -y mongodb-org
 RUN systemctl enable mongod
 RUN (/usr/bin/mongod --config /etc/mongod.conf &) &&\
 mongoimport --db "analytics" --collection "customers" /datatemp/customers.json  &&\
-mongoimport --db "analytics" --collection "customers" /datatemp/accounts.json  &&\
-mongoimport --db "analytics" --collection "customers" /datatemp/transactions.json  
+mongoimport --db "analytics" --collection "accounts" /datatemp/accounts.json  &&\
+mongoimport --db "analytics" --collection "transactions" /datatemp/transactions.json  &&\
+mongoimport --db "zips" --collection "examples" /datatemp/zips.json 
 
 ENV SPARKHOME=/spark/
 
