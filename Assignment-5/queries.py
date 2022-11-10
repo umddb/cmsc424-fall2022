@@ -123,6 +123,6 @@ def query19(db):
     return []
 
 ### 20. To be released
-def query13(db):
+def query20(db):
     return []
 
