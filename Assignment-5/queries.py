@@ -94,35 +94,89 @@ def query11(db):
 def query12(db):
     return []
 
-### 13. To be released
+### 13. Using an aggregation and '$addToSet' and '$first', write a query whose output has a multi-attribute _id comprising of account_id and year, with two aggregates: 
+### a set listing all the symbols that were traded by that account in that year, and 
+### the first symbol traded in that year for that account_id
+### Sort the final result by "_id" (a combination of account_id and year)
+### First few results look like:
+### {'_id': {'account_id': 50948, 'year': 1995}, 'traded_symbols': ['aapl'], 'first_symbol': 'aapl'}, 
+### {'_id': {'account_id': 50948, 'year': 2004}, 'traded_symbols': ['csco'], 'first_symbol': 'csco'},
+### {'_id': {'account_id': 50948, 'year': 2006}, 'traded_symbols': ['aapl'], 'first_symbol': 'aapl'},
 def query13(db):
     return []
 
-### 14. To be released
-def query14(db):
-    return []
 
-### 15. To be released
+### 14. Create an output that associates each "product" (found in 'accounts') and each "symbol" (found in 'transactions') with the total volume
+### of shares bought/sold (i.e., 'amount' in each transaction).
+### Restrict the computation to accounts with exactly 3 transactions (takes too long too run otherwise).
+### Sort the final result by "_id".
+### First few results look like:
+### {'_id': {'product': 'Brokerage', 'symbol': 'aapl'}, 'total_amount': 18081},
+### {'_id': {'product': 'Brokerage', 'symbol': 'adbe'}, 'total_amount': 2328},
+### {'_id': {'product': 'Brokerage', 'symbol': 'amzn'}, 'total_amount': 9802},
+### {'_id': {'product': 'Brokerage', 'symbol': 'bb'}, 'total_amount': 1415},
+    def query14(db):
+        return []
+
+### 15. Let's create a copy of the accounts collection using: db['accounts'].aggregates([ {"$out": "accounts_copy"} ])
+### Write the code to insert 10 more documents into the collection with data:
+###      oid = 5ca4bbc7a2dd94ee58162a61, ..., 5ca4bbc7a2dd94ee58162a6a
+###      account_id = 11, ..., 20
+###      limit = 10000 (for all)
+###      products = ["Brokerage", "InvestmentStock"] for all
+###  Make sure you match the data types present in the dataset right now. You may need to use bson.objectid.ObjectId
 def query15(db):
-    return []
+    db['accounts'].aggregate([ {"$out": "accounts_copy"} ])
 
-### 16. To be released
+    db['accounts_copy'].insert_many([
+### COMPLETE THE COMMAND
+    ])
+
+    return db['accounts_copy'].find( {"account_id": {"$gte": 11, "$lte": 20}} )
+
+### 16. Add a new "sub-document" to the "customers_copy" table (a copy of customers) of the form:
+###        {"summary": {"num_accounts": <the number of accounts for the customer>}}
+###
+### Note that, the simple update_many doesn't work here -- you have to use an aggregation pipeline (with just one stage)
+### https://www.mongodb.com/docs/manual/reference/method/db.collection.updateMany/#std-label-updateMany-behavior-aggregation-pipeline
+###
+### For the first customer (fmiller), the data would look like:
+###        {"summary": {"num_accounts": 6}}
+### For the second customer (valenciajennifer), the data would look like:
+###        {"summary": {"num_accounts": 1}}
 def query16(db):
-    return []
+    db['customers'].aggregate([ {"$out": "customers_copy"} ])
 
-### 17. To be released
+### USE update_many to do the required update
+
+    return db['customers_copy'].find({}, {"summary": 1})
+
+### 17. Here we will use the '$merge' stage to update a document with more complex information than possible with the basic update_many command.
+### Specifically, we will add a list of "products" into the "customers" collection -- i.e., for each customer, we will find the list of products for 
+### all of their accounts, and add it as a array (without duplication) into the customers collection
+### You may have to use multiple unwinds to get this result, along with an "addToSet" to create a set of all products without duplication
+### '$merge' must be the final stage, and should be used as: 
+###            {'$merge': { 'into': "customers_copy2", 'on': "_id", 'whenMatched': "merge", 'whenNotMatched': "insert" }}
+###  For more details on merge, see: https://www.mongodb.com/docs/manual/reference/operator/aggregation/merge/#mongodb-pipeline-pipe.-merge
+###
+### The document with username 'fmiller' would look like (only the last field is different):
+### {'_id': ObjectId('5ca4bbcea2dd94ee58162a68'),
+###   'username': 'fmiller',
+###   'name': 'Elizabeth Ray',
+###   'address': '9286 Bethany Glens\nVasqueztown, CO 22939',
+###   'birthdate': datetime.datetime(1977, 3, 2, 2, 20, 31),
+###   'email': 'arroyocolton@gmail.com',
+###   'active': True,
+###   'accounts': [371138, 324287, 276528, 332179, 422649, 387979],
+###   'tier_and_details': {'0df078f33aa74a2e9696e0520c1a828a': {'tier': 'Bronze', 'id': '0df078f33aa74a2e9696e0520c1a828a', 'active': True, 'benefits': ['sports tickets']}, '699456451cc24f028d2aa99d7534c219': {'tier': 'Bronze', 'benefits': ['24 hour dedicated line', 'concierge services'], 'active': True, 'id': '699456451cc24f028d2aa99d7534c219'}},
+###   'allProducts': ['InvestmentStock', 'Brokerage', 'CurrencyService', 'Commodity', 'Derivatives', 'InvestmentFund']}
+###
 def query17(db):
-    return []
+    db['customers'].aggregate([ {"$out": "customers_copy2"} ])
 
-### 18. To be released
-def query18(db):
-    return []
+    db['customers_copy2'].aggregate([
+### COMPLETE THE COMMAND
+            {'$merge': { 'into': "customers_copy2", 'on': "_id", 'whenMatched': "merge", 'whenNotMatched': "insert" }}
+    ])
 
-### 19. To be released
-def query19(db):
-    return []
-
-### 20. To be released
-def query20(db):
-    return []
-
+    return db['customers_copy2'].find({}, {'allProducts': 1})
