@@ -115,7 +115,7 @@ def query13(db):
 ### {'_id': {'product': 'Brokerage', 'symbol': 'adbe'}, 'total_amount': 2328},
 ### {'_id': {'product': 'Brokerage', 'symbol': 'amzn'}, 'total_amount': 9802},
 ### {'_id': {'product': 'Brokerage', 'symbol': 'bb'}, 'total_amount': 1415},
-    def query14(db):
+def query14(db):
         return []
 
 ### 15. Let's create a copy of the accounts collection using: db['accounts'].aggregates([ {"$out": "accounts_copy"} ])
