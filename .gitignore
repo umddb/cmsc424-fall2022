@@ -1,0 +1,11 @@
+.DS_Store
+.ipynb_checkpoints/*
+Assignment-0/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+Assignment-4/spark-3.3.0-bin-hadoop3
+Slides/~$01-Introduction.pptx
+Slides/~$04-NoSQL-BigDataSystems.pptx
+Slides/~$05-Database-Implementation.pptx
+Slides/~$05-NoSQL-BigDataSystems.pptx
+Slides/~$row-vs-column-example.pptx
+Slides/7-Miscellaneous.pptx
+*.class
